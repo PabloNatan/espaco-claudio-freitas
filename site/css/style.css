@@ -300,11 +300,13 @@ p { margin: 0; }
 /* 3. Números */
 .stat b, .teacher__nums b { font-variant-numeric: tabular-nums; }
 
-/* 4. Arcos da galeria: a foto preenche a moldura, em sequência */
-.motion .shot img { clip-path: inset(100% 0 0 0); }
-.motion .shot.is-in img { clip-path: inset(0 0 0 0); transition: clip-path 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: calc(var(--i, 0) * 130ms); }
-.motion .shot figcaption, .motion .shot .shot__tag { opacity: 0; }
-.motion .shot.is-in figcaption, .motion .shot.is-in .shot__tag { opacity: 1; transition: opacity 0.6s ease; transition-delay: calc(var(--i, 0) * 130ms + 0.7s); }
+/* 4. Arcos da galeria: a foto preenche a moldura, em sequência (só no celular; no desktop a galeria aparece direto) */
+@media (max-width: 959px) {
+  .motion .shot img { clip-path: inset(100% 0 0 0); }
+  .motion .shot.is-in img { clip-path: inset(0 0 0 0); transition: clip-path 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: calc(var(--i, 0) * 130ms); }
+  .motion .shot figcaption, .motion .shot .shot__tag { opacity: 0; }
+  .motion .shot.is-in figcaption, .motion .shot.is-in .shot__tag { opacity: 1; transition: opacity 0.6s ease; transition-delay: calc(var(--i, 0) * 130ms + 0.7s); }
+}
 
 /* 5. Pulso discreto no WhatsApp flutuante */
 .motion .fab::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--gold-hi); opacity: 0; animation: pulse 8s ease-out 4s infinite; }
