@@ -17,6 +17,11 @@
   <link rel="preload" as="image" type="image/webp" href="img/hero-480.webp" imagesrcset="img/hero-480.webp 480w, img/hero-900.webp 900w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Instrument+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function(d){var r=d.documentElement;r.classList.add("js");
+    if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&"IntersectionObserver" in window){r.classList.add("motion");
+    setTimeout(function(){if(!window.__ready)r.classList.remove("motion")},4000)}})(document);
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -86,8 +91,8 @@
 
   <div class="stats">
     <div class="wrap stats__in">
-      <div class="stat"><b>+20</b><span>anos de mega hair</span></div>
-      <div class="stat"><b>+100</b><span>alunos formados</span></div>
+      <div class="stat"><b data-count="20" data-prefix="+">+20</b><span>anos de mega hair</span></div>
+      <div class="stat"><b data-count="100" data-prefix="+">+100</b><span>alunos formados</span></div>
       <div class="stat"><b>1 dia</b><span>das 9h às 17h</span></div>
       <div class="stat"><b>1 a 1</b><span>só você e o professor</span></div>
     </div>
@@ -206,7 +211,7 @@
         <h2>Cláudio Freitas</h2>
         <p class="teacher__role">Seu professor · Fundador do Espaço Vittá</p>
         <p class="teacher__text">Cláudio trabalha com mega hair há mais de 20 anos e é cabeleireiro há 20. Já formou mais de 100 alunos. No curso VIP, você aprende só com ele, em aula individual, com todo o detalhe que uma turma cheia não permite.</p>
-        <div class="teacher__nums"><div><b>+20</b><span>anos de mega hair</span></div><div><b>+100</b><span>alunos formados</span></div></div>
+        <div class="teacher__nums"><div><b data-count="20" data-prefix="+">+20</b><span>anos de mega hair</span></div><div><b data-count="100" data-prefix="+">+100</b><span>alunos formados</span></div></div>
         <div class="teacher__actions">
           <a class="btn btn--gold" data-wa="geral" href="https://wa.me/5534997749793"><svg><use href="#wa"/></svg>Falar com o Cláudio</a>
           <a class="link" href="https://www.instagram.com/espacovittaclaudiofreitas" target="_blank" rel="noopener">@espacovittaclaudiofreitas no Instagram</a>

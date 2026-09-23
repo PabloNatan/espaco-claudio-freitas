@@ -39,4 +39,62 @@
   // Ano do rodapé
   const y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
+
+  // ---------- Animações (só quando html.motion está ativo) ----------
+  const root = document.documentElement;
+  window.__ready = true;
+  if (!root.classList.contains("motion")) return;
+
+  // Título do hero: palavras sobem de dentro de uma máscara
+  const h1 = document.querySelector(".hero h1");
+  if (h1) {
+    const text = h1.textContent.trim();
+    h1.setAttribute("aria-label", text);
+    h1.innerHTML = text.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(" ");
+    h1.classList.add("is-split");
+  }
+
+  // Revelar ao entrar na tela: fita, arcos da galeria e contadores
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const count = (el) => {
+    const end = +el.dataset.count, pre = el.dataset.prefix || "", t0 = performance.now(), dur = 1400;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = pre + Math.round(end * ease(p));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    el.textContent = pre + "0";
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.filter((e) => e.isIntersecting).forEach((e, k) => {
+      const el = e.target;
+      el.style.setProperty("--i", k);
+      el.classList.add("is-in");
+      if (el.dataset.count) count(el);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll(".fita, .shot, [data-count]").forEach((el) => io.observe(el));
+
+  // Parallax leve do hero (desktop) e linha do tempo que acompanha a rolagem
+  const heroPic = document.querySelector(".hero__media picture");
+  const list = document.querySelector(".day__list");
+  const items = list ? [...list.children] : [];
+  const wide = window.matchMedia("(min-width: 960px)");
+  let ticking = false;
+  const frame = () => {
+    ticking = false;
+    const y = window.scrollY, vh = window.innerHeight;
+    if (heroPic && wide.matches && y < vh * 1.2) heroPic.style.transform = `translate3d(0, ${(y * 0.14).toFixed(1)}px, 0)`;
+    if (list) {
+      const r = list.getBoundingClientRect(), mid = vh * 0.62;
+      list.style.setProperty("--p", Math.min(1, Math.max(0, (mid - r.top) / r.height)).toFixed(3));
+      items.forEach((li) => li.classList.toggle("is-on", li.getBoundingClientRect().top < mid));
+    }
+  };
+  const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  window.addEventListener("scroll", req, { passive: true });
+  window.addEventListener("resize", req);
+  frame();
 })();
